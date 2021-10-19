@@ -5,6 +5,7 @@
 
 void merge(int *, int *, int, int, int);
 void mergeSort(int *, int *, int, int);
+void array_gen();
 
 int main(int argc, char** argv) {
 	
@@ -15,7 +16,7 @@ int main(int argc, char** argv) {
     // {
     //     arr[i] = ((float)rand()/(float)(RAND_MAX)) * a;
     // }
-	int n = 10;
+	int n = 25;
 	int *original_array = malloc(n * sizeof(int));
 	
 	int c;
