@@ -18,7 +18,7 @@ int main()
     {
         printf("%f \n",arr[i]);
     }
-
+    size_t num;
     FILE *write_ptr;
     double buffer[Size];
     write_ptr = fopen("unsorted_array.bin","wb");  // w for write, b for binary
@@ -30,10 +30,11 @@ int main()
     FILE *ptr;
     double are[Size];
     ptr = fopen("unsorted_array.bin","rb");  // r for read, b for binary
-    array_store[Size] = fread(&are,sizeof(are),1,ptr);
-    for(int i=0;i<Size;i++)
-    {
-            printf("%f \n",array_store[i]);
-    }
+    num = fread(are[Size],sizeof(are),1,ptr);
+    printf("%f: ",num);
+    // for(int i=0;i<Size;i++)
+    // {
+    //         printf("%f \n",array_store[i]);
+    // }
     fclose(ptr);
 }
