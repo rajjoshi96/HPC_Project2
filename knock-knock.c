@@ -1,5 +1,5 @@
 //This code runs perfectly for quick sort
-// very large number 100000 
+// very large number ArraySize = 100000 
 
 //please don't change anything 
 
@@ -10,34 +10,35 @@
 #include "math.h"
 #include <time.h>
 int IncOrder(const void *e1, const void *e2 )
-    {
-          return (*((int *)e1) - *((int *)e2));
-    }
+{
+    return (*((int *)e1) - *((int *)e2));
+}
 
 void DisplayError(char *str)
 {
     printf("Error: %s \n",str);
 }
 
-int Partition(int *arr, int left, int right) {
-int i = left, j = right;
-int tmp;
-int pivot = arr[(left + right) / 2];
-/* partition */
-while (i <= j) {
-while (arr[i] < pivot)
-i++;
-while (arr[j] > pivot)
-j--;
-if (i <= j) {
-tmp = arr[i];
-arr[i] = arr[j];
-arr[j] = tmp;
-i++;
-j--;
-}
-}
-return j;
+int Partition(int *arr, int left, int right) 
+{
+    int i = left, j = right;
+    int tmp;
+    int pivot = arr[(left + right) / 2];
+    /* partition */
+    while (i <= j) {
+    while (arr[i] < pivot)
+    i++;
+    while (arr[j] > pivot)
+    j--;
+    if (i <= j) {
+    tmp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tmp;
+    i++;
+    j--;
+    }
+    }
+    return j;
 }
 
 int PowerOf2(int num)
@@ -67,23 +68,23 @@ int PQuickSort(int *Array,int start,int end,int m,int id,int MyRank)
     LocalLength=-1;
 
     if(m==0)
-{
-    if(MyRank==id)
+    {
+        if(MyRank==id)
 
-    qsort(Array, end-start, sizeof *Array, IncOrder);
-    return 0;
-}
+        qsort(Array, end-start, sizeof *Array, IncOrder);
+        return 0;
+    }
 
 if(MyRank==id)
 {
     r=Partition(Array,start,end);
     LocalLength=end-r;
-MPI_Send(&LocalLength,1,MPI_INT,id+PowerOf2(m-1),MyRank,MPI_COMM_WORLD);
+    MPI_Send(&LocalLength,1,MPI_INT,id+PowerOf2(m-1),MyRank,MPI_COMM_WORLD);
 
-if(LocalLength!=0)
+    if(LocalLength!=0)
 
-MPI_Send(Array+r+1,LocalLength,MPI_INT,id+PowerOf2(m-1),MyRank,MPI_COMM_WORLD);
-    }
+    MPI_Send(Array+r+1,LocalLength,MPI_INT,id+PowerOf2(m-1),MyRank,MPI_COMM_WORLD);
+}
 
     if(MyRank==id+PowerOf2(m-1))
     {
@@ -93,7 +94,7 @@ MPI_Send(Array+r+1,LocalLength,MPI_INT,id+PowerOf2(m-1),MyRank,MPI_COMM_WORLD);
         {
              tmp=(int *)malloc(LocalLength*sizeof(int));
              if(tmp==0)
-                 DisplayError("Malloc memory error!");
+                DisplayError("Malloc memory error!");
 
 MPI_Recv(tmp,LocalLength,MPI_INT,id,id,MPI_COMM_WORLD,&status);
         }
@@ -114,8 +115,7 @@ MPI_Recv(tmp,LocalLength,MPI_INT,id,id,MPI_COMM_WORLD,&status);
 MPI_Send(tmp,LocalLength,MPI_INT,id,id+PowerOf2(m-1),MPI_COMM_WORLD);
 
     if((MyRank==id) && (LocalLength!=0))
-        MPI_Recv(Array+r+1,LocalLength,MPI_INT,id+PowerOf2(m-1),id+PowerOf2
-(m-1),MPI_COMM_WORLD,&status);
+        MPI_Recv(Array+r+1,LocalLength,MPI_INT,id+PowerOf2(m-1),id+PowerOf2(m-1),MPI_COMM_WORLD,&status);
 
 }
 
@@ -141,12 +141,12 @@ int LogBase2(int num)
 
 int main(int argc,char *argv[])
 {
-    int     ArraySize;
-    int     *Array;
-    int    MyRank, npes;
-    int     i;
-    int     m ;
-    double     t1,t2,t3;
+    int ArraySize;
+    int *Array;
+    int MyRank, npes;
+    int i;
+    int m ;
+    double t1,t2,t3;
 
 
     //MPI_Status status;
@@ -158,7 +158,7 @@ int main(int argc,char *argv[])
 
     if(MyRank==0)
     {
-        ArraySize=1000000;
+        ArraySize=100;
         printf("%d\n",ArraySize);
         Array=(int *)malloc(ArraySize*sizeof(int));
 
@@ -168,7 +168,7 @@ int main(int argc,char *argv[])
         srand(396);
         for(i=0;i<ArraySize;i++)
         {
-            Array[i]=(int)rand()%1000;
+            Array[i]=(int)rand()%ArraySize;
         }
         printf("\n");
     }
@@ -186,7 +186,7 @@ int main(int argc,char *argv[])
         for(i=0;i<ArraySize;i++)
         {
             printf("%10d",Array[i]);
-                printf("\n");
+            printf("\n");
         }
         printf("\n");
     printf("MPI_time :%6.3f\n",t3);
