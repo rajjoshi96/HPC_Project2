@@ -8,7 +8,10 @@ void mergeSort(int *, int *, int, int);
 void array_gen();
 
 int main(int argc, char** argv) {
-	
+	srand((unsigned int)time(NULL));
+    struct timeval start, end;
+    gettimeofday(&start, NULL);
+    double store_time[8];
 	/********** Create and populate the array **********/
     // float a = 10.0;
     // float arr[Size] = {};
@@ -16,7 +19,7 @@ int main(int argc, char** argv) {
     // {
     //     arr[i] = ((float)rand()/(float)(RAND_MAX)) * a;
     // }
-	int n = 25;
+	int n = 100;
 	int *original_array = malloc(n * sizeof(int));
 	
 	int c;
@@ -27,7 +30,7 @@ int main(int argc, char** argv) {
 		original_array[c] = rand() % n;
 		//printf("%d ", original_array[c]);
 		
-		}
+	}
 
 	//printf("\n");
 	//printf("\n");
@@ -57,7 +60,7 @@ int main(int argc, char** argv) {
 		
 		sorted = malloc(n * sizeof(int));
 		
-		}
+	}
 	
 	MPI_Gather(sub_array, size, MPI_INT, sorted, size, MPI_INT, 0, MPI_COMM_WORLD);
 	
@@ -73,7 +76,7 @@ int main(int argc, char** argv) {
 			
 			printf("%d ", sorted[c]);
 			
-			}
+		}
 			
 		//printf("\n");
 		printf("\n");
@@ -82,7 +85,7 @@ int main(int argc, char** argv) {
 		free(sorted);
 		free(other_array);
 			
-		}
+	}
 	
 	/********** Clean up rest **********/
 	free(original_array);
@@ -92,6 +95,9 @@ int main(int argc, char** argv) {
 	/********** Finalize MPI **********/
 	MPI_Barrier(MPI_COMM_WORLD);
 	MPI_Finalize();
+	gettimeofday(&end, NULL);
+    double delta = ((end.tv_sec  - start.tv_sec) * 1000000u + end.tv_usec - start.tv_usec) / 1.e6;
+    printf("Delta = %f \n",delta); 
 	
 }
 
@@ -110,18 +116,18 @@ void merge(int *a, int *b, int l, int m, int r) {
 			b[i] = a[h];
 			h++;
 			
-			}
+		}
 			
 		else {
 			
 			b[i] = a[j];
 			j++;
 			
-			}
+		}
 			
 		i++;
 		
-		}
+	}
 		
 	if(m < h) {
 		
@@ -130,9 +136,9 @@ void merge(int *a, int *b, int l, int m, int r) {
 			b[i] = a[k];
 			i++;
 			
-			}
-			
 		}
+			
+	}
 		
 	else {
 		
@@ -141,15 +147,15 @@ void merge(int *a, int *b, int l, int m, int r) {
 			b[i] = a[k];
 			i++;
 			
-			}
-			
 		}
+			
+	}
 		
 	for(k = l; k <= r; k++) {
 		
 		a[k] = b[k];
 		
-		}
+	}
 		
 }
 
@@ -166,6 +172,6 @@ void mergeSort(int *a, int *b, int l, int r) {
 		mergeSort(a, b, (m + 1), r);
 		merge(a, b, l, m, r);
 		
-		}
+	}
 		
 }
