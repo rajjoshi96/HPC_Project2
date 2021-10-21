@@ -5,7 +5,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-#define LEN 5
+#define LEN 10000
 
 struct foo {
   double a;
@@ -34,7 +34,7 @@ int main( ) {
     fclose(fp);
     
     struct foo input[LEN];
-    
+    double list[LEN]={};
     // read it
     fp = fopen("unsorted_array.bin","rb");
     for ( int i = 0 ; i < LEN ; i++ ) {
@@ -44,8 +44,10 @@ int main( ) {
     
     // print it
     for ( int i = 0 ; i < LEN ; i++ ) {
-        printf("Value at index %d is %f\n", i, input[i].a);
+        printf("Array is %f\n", input[i].a);
+        //list[i]= input[i].a;
     }
+    //return input;
 }
 
 

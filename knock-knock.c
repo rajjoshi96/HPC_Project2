@@ -9,6 +9,7 @@
 #define  TRUE 1
 #include "math.h"
 #include <time.h>
+#include<sys/time.h>
 int IncOrder(const void *e1, const void *e2 )
 {
     return (*((int *)e1) - *((int *)e2));
@@ -147,7 +148,10 @@ int main(int argc,char *argv[])
     int i;
     int m ;
     double t1,t2,t3;
-
+    srand((unsigned int)time(NULL));
+    struct timeval start, end;
+    gettimeofday(&start, NULL);
+    double store_time[8];
 
     //MPI_Status status;
     MPI_Init(&argc,&argv);
@@ -158,8 +162,8 @@ int main(int argc,char *argv[])
 
     if(MyRank==0)
     {
-        ArraySize=100;
-        printf("%d\n",ArraySize);
+        ArraySize=10000;
+        //printf("%d\n",ArraySize);
         Array=(int *)malloc(ArraySize*sizeof(int));
 
         if(Array==0)
@@ -170,7 +174,7 @@ int main(int argc,char *argv[])
         {
             Array[i]=(int)rand()%ArraySize;
         }
-        printf("\n");
+        // printf("\n");
     }
 
     m=LogBase2(npes);
@@ -183,16 +187,17 @@ int main(int argc,char *argv[])
 
     if(MyRank==0)
     {
-        for(i=0;i<ArraySize;i++)
-        {
-            printf("%10d",Array[i]);
-            printf("\n");
-        }
-        printf("\n");
+        // for(i=0;i<ArraySize-1;i++)
+        // {
+        //     printf("%10d \n",Array[i]);
+        // }
+        // printf("\n");
     printf("MPI_time :%6.3f\n",t3);
 
     }
-
+    // gettimeofday(&end, NULL);
+    // double delta = ((end.tv_sec  - start.tv_sec) * 1000000u + end.tv_usec - start.tv_usec) / 1.e6;
+    // printf("Delta = %f \n",delta); 
     MPI_Finalize();
     return 0;
 }

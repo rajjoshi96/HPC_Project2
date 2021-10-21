@@ -19,6 +19,9 @@ int main(int argc, char** argv) {
     // {
     //     arr[i] = ((float)rand()/(float)(RAND_MAX)) * a;
     // }
+
+
+	//call generate array()
 	int n = 100;
 	int *original_array = malloc(n * sizeof(int));
 	
@@ -174,4 +177,58 @@ void mergeSort(int *a, int *b, int l, int r) {
 		
 	}
 		
+}
+
+
+
+
+//The code to be merged
+// This code runs perfectly fine for the first two questions of Project 2
+// Change the LEN to higher values
+
+
+
+
+#define LEN 5
+
+struct foo {
+  double a;
+};
+
+void generate_array( ) {
+    struct foo array[LEN];
+    //        arr[i] = ((double)rand()/(double)(RAND_MAX)) * a;
+    float t=10.0;
+    // fill it
+    for ( int i = 0 ; i < LEN ; i++ ) {
+        array[i].a =((double)rand()/(double)(RAND_MAX)) * t;
+    }
+
+    // write it
+    FILE *fp = fopen("testfile1.bin","wb");
+    for ( int i = 0 ; i < LEN ; i++ ) {
+        fwrite(&array[i].a,sizeof(array[i].a),1,fp);
+    }
+
+    // Same again, but write a whole struct instance at once
+    fp = fopen("unsorted_array.bin","wb");
+    for ( int i = 0 ; i < LEN ; i++ ) {
+        fwrite(&array[i],sizeof(array[i]),1,fp);
+    }
+    fclose(fp);
+    
+    struct foo input[LEN];
+ 
+    // read it
+    fp = fopen("unsorted_array.bin","rb");
+    for ( int i = 0 ; i < LEN ; i++ ) {
+        fread(&input[i],sizeof(input[i]),1,fp);
+    }
+    fclose(fp);
+    
+    // print it
+    for ( int i = 0 ; i < LEN ; i++ ) {
+        printf("Value at index %d is %f\n", i, input[i].a);
+    }
+	return(input.a);
 }

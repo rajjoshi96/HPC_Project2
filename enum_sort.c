@@ -77,7 +77,7 @@ int main (int argc, char * argv [])
 	MPI_Init (& argc, & argv);/* MPI initialization */ 
 	MPI_Comm_rank (MPI_COMM_WORLD, & MyID);/* Each processor determines its own ID */ 
 	MPI_Comm_size (MPI_COMM_WORLD, & SumID);/* Each processor determines the total number of processors */
-	fprintf (stderr, "Process% d on% s\n", MyID);
+	fprintf (stderr, "Process% d on %s \n", MyID);
 	fflush (stderr);
 
 
