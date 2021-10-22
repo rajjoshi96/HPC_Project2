@@ -15,14 +15,12 @@ int main(int argc, char** argv) {
     gettimeofday(&start, NULL);
     double store_time[8];
 	/********** Create and populate the array **********/
-<<<<<<< HEAD
     float t = 10.0;
 
 	int original_array[n]={};
 	for ( int i = 0 ; i < n ; i++ ) {
         original_array[i] =((double)rand()/(double)(RAND_MAX)) * t;
     }
-=======
     // float a = 10.0;
     // float arr[Size] = {};
     // for (int i=0;i<Size;i++)
@@ -35,7 +33,6 @@ int main(int argc, char** argv) {
 	//int n = 1000000;
 	int *original_array = malloc(n * sizeof(int));
 	
->>>>>>> parent of f7f0497 (mergesortserial)
 	int c;
 	srand(time(NULL));
 	for(c = 0; c < n; c++) {
@@ -194,8 +191,6 @@ void mergeSort(int *a, int *b, int l, int r) {
 // This code runs perfectly fine for the first two questions of Project 2
 // Change the LEN to higher values
 
-<<<<<<< HEAD
-=======
 
 
 
@@ -242,4 +237,3 @@ struct foo {
 //     }
 // 	return(input.a);
 // }
->>>>>>> parent of f7f0497 (mergesortserial)
