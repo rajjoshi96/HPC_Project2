@@ -3,7 +3,7 @@
 #include <time.h>
 #include<sys/time.h>
 #include <mpi.h>
-#define n 100000
+#define n 100
 
 void merge(int *, int *, int, int, int);
 void mergeSort(int *, int *, int, int);
@@ -15,18 +15,21 @@ int main(int argc, char** argv) {
     gettimeofday(&start, NULL);
     double store_time[8];
 	/********** Create and populate the array **********/
-    // float a = 10.0;
+    float t = 10.0;
     // float arr[Size] = {};
     // for (int i=0;i<Size;i++)
     // {
     //     arr[i] = ((float)rand()/(float)(RAND_MAX)) * a;
     // }
-
+	
 
 	//call generate array()
 	//int n = 1000000;
-	int *original_array = malloc(n * sizeof(int));
-	
+	//int *original_array = malloc(n * sizeof(int));
+	int original_array[n]={};
+	for ( int i = 0 ; i < n ; i++ ) {
+        original_array[i] =((double)rand()/(double)(RAND_MAX)) * t;
+    }
 	int c;
 	srand(time(NULL));
 	//printf("This is the unsorted array: ");
@@ -93,7 +96,7 @@ int main(int argc, char** argv) {
 	}
 	
 	/********** Clean up rest **********/
-	free(original_array);
+	//free(original_array);
 	free(sub_array);
 	free(tmp_array);
 	
@@ -191,11 +194,11 @@ void mergeSort(int *a, int *b, int l, int r) {
 
 
 
-#define LEN 5
+// #define LEN 5
 
-struct foo {
-  double a;
-};
+// struct foo {
+//   double a;
+// };
 
 // void generate_array( ) {
 //     struct foo array[LEN];
