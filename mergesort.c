@@ -16,32 +16,20 @@ int main(int argc, char** argv) {
     double store_time[8];
 	/********** Create and populate the array **********/
     float t = 10.0;
-    // float arr[Size] = {};
-    // for (int i=0;i<Size;i++)
-    // {
-    //     arr[i] = ((float)rand()/(float)(RAND_MAX)) * a;
-    // }
-	
 
-	//call generate array()
-	//int n = 1000000;
-	//int *original_array = malloc(n * sizeof(int));
 	int original_array[n]={};
 	for ( int i = 0 ; i < n ; i++ ) {
         original_array[i] =((double)rand()/(double)(RAND_MAX)) * t;
     }
 	int c;
 	srand(time(NULL));
-	//printf("This is the unsorted array: ");
 	for(c = 0; c < n; c++) {
 		
 		original_array[c] = rand() % n;
-		//printf("%d ", original_array[c]);
 		
 	}
 
-	//printf("\n");
-	//printf("\n");
+
 	
 	/********** Initialize MPI **********/
 	int world_rank;
@@ -191,49 +179,3 @@ void mergeSort(int *a, int *b, int l, int r) {
 // This code runs perfectly fine for the first two questions of Project 2
 // Change the LEN to higher values
 
-
-
-
-// #define LEN 5
-
-// struct foo {
-//   double a;
-// };
-
-// void generate_array( ) {
-//     struct foo array[LEN];
-//     //        arr[i] = ((double)rand()/(double)(RAND_MAX)) * a;
-//     float t=10.0;
-//     // fill it
-//     for ( int i = 0 ; i < LEN ; i++ ) {
-//         array[i].a =((double)rand()/(double)(RAND_MAX)) * t;
-//     }
-
-//     // write it
-//     FILE *fp = fopen("testfile1.bin","wb");
-//     for ( int i = 0 ; i < LEN ; i++ ) {
-//         fwrite(&array[i].a,sizeof(array[i].a),1,fp);
-//     }
-
-//     // Same again, but write a whole struct instance at once
-//     fp = fopen("unsorted_array.bin","wb");
-//     for ( int i = 0 ; i < LEN ; i++ ) {
-//         fwrite(&array[i],sizeof(array[i]),1,fp);
-//     }
-//     fclose(fp);
-    
-//     struct foo input[LEN];
- 
-//     // read it
-//     fp = fopen("unsorted_array.bin","rb");
-//     for ( int i = 0 ; i < LEN ; i++ ) {
-//         fread(&input[i],sizeof(input[i]),1,fp);
-//     }
-//     fclose(fp);
-    
-//     // print it
-//     for ( int i = 0 ; i < LEN ; i++ ) {
-//         printf("Value at index %d is %f\n", i, input[i].a);
-//     }
-// 	return(input.a);
-// }
