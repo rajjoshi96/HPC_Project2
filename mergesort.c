@@ -3,7 +3,7 @@
 #include <time.h>
 #include<sys/time.h>
 #include <mpi.h>
-#define n 100
+#define n 100000
 
 void merge(int *, int *, int, int, int);
 void mergeSort(int *, int *, int, int);
@@ -15,12 +15,27 @@ int main(int argc, char** argv) {
     gettimeofday(&start, NULL);
     double store_time[8];
 	/********** Create and populate the array **********/
+<<<<<<< HEAD
     float t = 10.0;
 
 	int original_array[n]={};
 	for ( int i = 0 ; i < n ; i++ ) {
         original_array[i] =((double)rand()/(double)(RAND_MAX)) * t;
     }
+=======
+    // float a = 10.0;
+    // float arr[Size] = {};
+    // for (int i=0;i<Size;i++)
+    // {
+    //     arr[i] = ((float)rand()/(float)(RAND_MAX)) * a;
+    // }
+
+
+	//call generate array()
+	//int n = 1000000;
+	int *original_array = malloc(n * sizeof(int));
+	
+>>>>>>> parent of f7f0497 (mergesortserial)
 	int c;
 	srand(time(NULL));
 	for(c = 0; c < n; c++) {
@@ -84,7 +99,7 @@ int main(int argc, char** argv) {
 	}
 	
 	/********** Clean up rest **********/
-	//free(original_array);
+	free(original_array);
 	free(sub_array);
 	free(tmp_array);
 	
@@ -179,3 +194,52 @@ void mergeSort(int *a, int *b, int l, int r) {
 // This code runs perfectly fine for the first two questions of Project 2
 // Change the LEN to higher values
 
+<<<<<<< HEAD
+=======
+
+
+
+#define LEN 5
+
+struct foo {
+  double a;
+};
+
+// void generate_array( ) {
+//     struct foo array[LEN];
+//     //        arr[i] = ((double)rand()/(double)(RAND_MAX)) * a;
+//     float t=10.0;
+//     // fill it
+//     for ( int i = 0 ; i < LEN ; i++ ) {
+//         array[i].a =((double)rand()/(double)(RAND_MAX)) * t;
+//     }
+
+//     // write it
+//     FILE *fp = fopen("testfile1.bin","wb");
+//     for ( int i = 0 ; i < LEN ; i++ ) {
+//         fwrite(&array[i].a,sizeof(array[i].a),1,fp);
+//     }
+
+//     // Same again, but write a whole struct instance at once
+//     fp = fopen("unsorted_array.bin","wb");
+//     for ( int i = 0 ; i < LEN ; i++ ) {
+//         fwrite(&array[i],sizeof(array[i]),1,fp);
+//     }
+//     fclose(fp);
+    
+//     struct foo input[LEN];
+ 
+//     // read it
+//     fp = fopen("unsorted_array.bin","rb");
+//     for ( int i = 0 ; i < LEN ; i++ ) {
+//         fread(&input[i],sizeof(input[i]),1,fp);
+//     }
+//     fclose(fp);
+    
+//     // print it
+//     for ( int i = 0 ; i < LEN ; i++ ) {
+//         printf("Value at index %d is %f\n", i, input[i].a);
+//     }
+// 	return(input.a);
+// }
+>>>>>>> parent of f7f0497 (mergesortserial)
