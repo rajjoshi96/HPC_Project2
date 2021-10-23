@@ -7,8 +7,8 @@
 #include<sys/time.h>
 #include <mpi.h>
 #include<math.h>
-#define n 10
-#define LEN 10
+#define n 10000
+#define LEN 10000
 
 void merge(float *, float *, int, int, int);
 void mergeSort(float *, float *, int, int);
