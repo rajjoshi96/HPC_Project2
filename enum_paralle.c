@@ -45,13 +45,9 @@ int GetDataSize ()
 {  
 	int i;  
 
-	while (1) {  
 		fprintf (stderr, "Please enter the size of the array:"); 
 		fflush (stderr);
 		scanf ("% d", & i);  
-		if (i> 0) 
-			break;  
-	}  
 	return i;  
 }  
 

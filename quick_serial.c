@@ -1,6 +1,6 @@
 // To submit serial program
 
-
+//works perfect
 ///quick sort using pivot as the last element 
 
 

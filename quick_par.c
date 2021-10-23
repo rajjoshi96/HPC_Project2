@@ -10,6 +10,7 @@
 #include "math.h"
 #include <time.h>
 #include<sys/time.h>
+#define Size 10000
 int IncOrder(const void *e1, const void *e2 )
 {
     return (*((int *)e1) - *((int *)e2));
@@ -20,24 +21,25 @@ void DisplayError(char *str)
     printf("Error: %s \n",str);
 }
 
-int Partition(int *arr, int left, int right) 
+int Partition(float *arr, int left, int right) 
 {
     int i = left, j = right;
-    int tmp;
+    float tmp;
     int pivot = arr[(left + right) / 2];
     /* partition */
     while (i <= j) {
-    while (arr[i] < pivot)
-    i++;
-    while (arr[j] > pivot)
-    j--;
-    if (i <= j) {
-    tmp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = tmp;
-    i++;
-    j--;
-    }
+        while (arr[i] < pivot)
+        i++;
+        while (arr[j] > pivot)
+        j--;
+        if (i <= j) 
+        {
+            tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+            i++;
+            j--;
+        }
     }
     return j;
 }
@@ -58,12 +60,12 @@ int PowerOf2(int num)
 }
 
 
-int PQuickSort(int *Array,int start,int end,int m,int id,int MyRank)
+int PQuickSort(float *Array,int start,int end,int m,int id,int MyRank)
 {
     int j;
     int r;
     int LocalLength;
-    int *tmp;
+    float *tmp;
     //int newsize;
     MPI_Status status;
     LocalLength=-1;
@@ -93,7 +95,7 @@ if(MyRank==id)
 
        if(LocalLength!=0)
         {
-             tmp=(int *)malloc(LocalLength*sizeof(int));
+             tmp=(float *)malloc(LocalLength*sizeof(float));
              if(tmp==0)
                 DisplayError("Malloc memory error!");
 
@@ -142,16 +144,18 @@ int LogBase2(int num)
 
 int main(int argc,char *argv[])
 {
-    int ArraySize;
-    int *Array;
+    int ArraySize=Size;
+    float *Array;
     int MyRank, npes;
     int i;
     int m ;
-    double t1,t2,t3;
+    float t1,t2,t3;
     srand((unsigned int)time(NULL));
     struct timeval start, end;
     gettimeofday(&start, NULL);
-    double store_time[8];
+    float store_time[8];
+    float array[Size]={};
+    float t=10.0;
 
     //MPI_Status status;
     MPI_Init(&argc,&argv);
@@ -160,43 +164,71 @@ int main(int argc,char *argv[])
 
     MPI_Comm_size(MPI_COMM_WORLD,&npes);
 
-    if(MyRank==0)
-    {
-        ArraySize=10000;
-        //printf("%d\n",ArraySize);
-        Array=(int *)malloc(ArraySize*sizeof(int));
+    //if(MyRank==0)
+    //{
+        // ArraySize=10000;
+        // //printf("%d\n",ArraySize);
+        // Array=(int *)malloc(ArraySize*sizeof(int));
 
-        if(Array==0)
-            printf("Malloc memory error!");
+        // if(Array==0)
+        //     printf("Malloc memory error!");
 
-        srand(396);
-        for(i=0;i<ArraySize;i++)
-        {
-            Array[i]=(int)rand()%ArraySize;
-        }
+        // srand(396);
+        // for(i=0;i<ArraySize;i++)
+        // {
+        //     Array[i]=(int)rand()%ArraySize;
+        // }
         // printf("\n");
+    for ( int i = 0 ; i < Size ; i++ ) 
+    {
+        array[i] =((float)rand()/(float)(RAND_MAX)) * t;
     }
 
+    // write it
+    FILE *fp = fopen("testfile1.bin","wb");
+    for ( int i = 0 ; i < Size ; i++ ) 
+    {
+        fwrite(&array[i],sizeof(array[i]),1,fp);
+    }
+
+    fp = fopen("unsorted_array.bin","wb");
+    for ( int i = 0 ; i < Size ; i++ ) {
+        fwrite(&array[i],sizeof(array[i]),1,fp);
+    }
+    fclose(fp);
+        
+    float input[Size]={};
+        // read it
+    fp = fopen("unsorted_array.bin","rb");
+    for ( int i = 0 ; i < Size ; i++ ) {
+        fread(&input[i],sizeof(input[i]),1,fp);
+    }
+    fclose(fp);
+    //}
+    for(int i=0; i<Size;i++)
+    {
+        printf("%f \n", input[i]);
+    }
     m=LogBase2(npes);
 
-    MPI_Bcast(&ArraySize,1,MPI_INT,0,MPI_COMM_WORLD);
+    MPI_Bcast(&ArraySize,1,MPI_INT,0,MPI_COMM_WORLD);//&arraysize
         t1=MPI_Wtime();
-    PQuickSort(Array,0,ArraySize-1,m,0,MyRank);
+    PQuickSort(input,0,Size-1,m,0,MyRank);//arraysize
         t2=MPI_Wtime();
         t3=t2-t1;
 
     if(MyRank==0)
     {
-        for(i=0;i<ArraySize-1;i++)
+        for(i=0;i<Size-1;i++)
         {
-            printf("%10d \n",Array[i]);
+            printf("%10f \n",Array[i]);
         }
         // printf("\n");
-        printf("MPI_time :%6.3f\n",t3);
+    printf("MPI_time :%6.3f\n",t3);
 
     }
     // gettimeofday(&end, NULL);
-    // double delta = ((end.tv_sec  - start.tv_sec) * 1000000u + end.tv_usec - start.tv_usec) / 1.e6;
+    // float delta = ((end.tv_sec  - start.tv_sec) * 1000000u + end.tv_usec - start.tv_usec) / 1.e6;
     // printf("Delta = %f \n",delta); 
     MPI_Finalize();
     return 0;
