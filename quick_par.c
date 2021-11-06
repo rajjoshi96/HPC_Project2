@@ -10,7 +10,7 @@
 #include "math.h"
 #include <time.h>
 #include<sys/time.h>
-#define size 100000
+#define size 10000000
 int IncOrder(const void *e1, const void *e2 )
 {
     return (*((int *)e1) - *((int *)e2));
@@ -190,7 +190,7 @@ int main(int argc,char *argv[])
     {
         for(i=0;i<ArraySize-1;i++)
         {
-            printf("%10d \n",Array[i]);
+            printf("%d \n",Array[i]);
         }
         // printf("\n");
         printf("MPI_time :%6.3f\n",t3);

@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include<sys/time.h>
-#define Size 100000
+#define Size 10000 
 
 // Swap function
 void swap(float* a, float* b)

@@ -5,8 +5,8 @@
 #include<sys/time.h>
 #include<stdio.h>
 #include<stdlib.h>
-#define LEN 10000
-#define Size 10000
+#define LEN 999999
+#define Size 999999 
 
 
 void merge_sort(int i, int j, double a[], double aux[]) {
